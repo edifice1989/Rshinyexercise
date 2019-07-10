@@ -17,9 +17,9 @@ marker_list<-list("BIOMARKER.A","BIOMARKER.B")
     ggplotly(p)
   })
   
-  selectedData <- reactive({
-    sth[, c(input$xcol, input$ycol, input$zcol)]
-  })
+#  selectedData <- reactive({
+#    sth[, c(input$xcol, input$ycol, input$zcol)]
+#  })
   
   #===== TASK 2 ===== (DONE)
   output$plot2 <- renderPlotly({
@@ -33,7 +33,8 @@ marker_list<-list("BIOMARKER.A","BIOMARKER.B")
     
     else if(class(sth[,input$xcol]) != "factor" && class(sth[,input$ycol]) == "factor"){ 
       p<-ggplot(sth, aes(x=sth[,input$ycol], y=sth[,input$xcol])) +
-        geom_boxplot()+xlab(input$xcol)+ylab(input$ycol)
+        geom_boxplot()+facet_grid(sth[,input$zcol] ~ .)+
+        xlab(input$ycol)+ylab(input$xcol)
       ggplotly(p)
     }
     else if(class(sth[,input$xcol]) != "factor" && class(sth[,input$ycol]) != "factor" ){ 
